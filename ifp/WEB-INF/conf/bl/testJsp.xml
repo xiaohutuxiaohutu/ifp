@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="testJsp" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstSex" desc="客户性别(M:男,F:女)" defaultValue="M"/>
+            <bl:dataField name="cstAge" desc="年龄"/>
+            <bl:dataField name="pageNo" desc="当前页码"/>
+            <bl:dataField name="passMessageInOne" desc="透传报文信息"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="cstNo"/>
+            <bl:inField name="cstName"/>
+            <bl:inField name="cstSex"/>
+            <bl:inField name="cstAge"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="passMessageInOne"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="messageCommAction0" type="messageCommAction">
+                <bl:actionConfig>
+                    <bl:property name="commClientName" value="mockClient"/>
+                    <bl:property name="trxCode" value="mb100001"/>
+                    <bl:property name="sysCode" value="mb"/>
+                </bl:actionConfig>
+                <bl:target id="messageCommAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition1" value="messageCommAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+	<!-- 声明需要调用的服务接口 -->
+	<dubbo:reference id="dubbov_getUserInfoFlow" group="getUserInfoFlow" interface="com.ifp.core.flow.service.FlowService" />
+	
+	<dubbo:reference id="dubbov_sameAIOFlow" group="sameAIOFlow" interface="com.ifp.core.flow.service.FlowService" />
+	<dubbo:reference id="dubbov_sameAIFlow" group="sameAIFlow" interface="com.ifp.core.flow.service.FlowService" />
+	<dubbo:reference id="dubbov_sameAOFlow" group="sameAOFlow" interface="com.ifp.core.flow.service.FlowService" />
+	<dubbo:reference id="dubbov_sameIOFlow" group="sameIOFlow" interface="com.ifp.core.flow.service.FlowService" />
+</beans>

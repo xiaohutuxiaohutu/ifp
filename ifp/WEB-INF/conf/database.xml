@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <!-- 数据库适配 -->
+    <bean id="mysqlJdbcAdapter" class="com.ifp.core.jdbc.adapter.MysqlJdbcAdapter" />
+    <bean id="db2JdbcAdapter" class="com.ifp.core.jdbc.adapter.DB2JdbcAdapter" />
+    <bean id="oracleJdbcAdapter" class="com.ifp.core.jdbc.adapter.OracleJdbcAdapter" />
+    
+    <bean id="dataSourceHandle" class="com.ifp.core.jdbc.DataSourceHandle">
+        <property name="txManagerMap" ref="txManagerMap" />
+        <property name="jdbcTemplateMap" ref="jdbcTemplateMap" />
+    </bean>
+    
+    <!-- 主数据源，约定为mainDB -->
+    <bean id="mainDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		  <property name="driverClassName" value="${datasource.driverClassName}"></property>
+		  <property name="url" value="${datasource.url}"></property>
+		  <property name="username" value="${datasource.username}"></property>
+		  <property name="password" value="${datasource.password}"></property>
+	 </bean>
+	<!--
+	<bean id="mainDB_jndi" class="org.springframework.jndi.JndiObjectFactoryBean">        
+        <property name="jndiName" value="java:comp/env/jdbc/ifp_ds"/>        
+	</bean>  
+     -->
+    
+    <bean id="mainJdbcTempplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="mainDB" />
+    </bean>
+    
+    <!-- 事务管理 -->
+    <bean id="mainTxManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="mainDB" />
+    </bean>
+    
+    <util:map id="jdbcTemplateMap">
+        <entry key="mainDB" value-ref="mainJdbcTempplate"/>
+        <entry key="mainDB_Adapter" value-ref="mysqlJdbcAdapter"/>
+        <!-- <entry key="mainDB_Adapter" value-ref="oracleJdbcAdapter"/> -->
+    </util:map>
+    
+    <util:map id="txManagerMap">
+        <entry key="mainDB" value-ref="mainTxManager" />
+    </util:map>
+</beans>

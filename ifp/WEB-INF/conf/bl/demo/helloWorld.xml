@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="demo.helloWorld" name="逻辑测试" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="word1" desc="参数1"/>
+            <bl:dataField name="word2" desc="参数2"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="word1"/>
+            <bl:inField name="word2"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="word1"/>
+            <bl:outField name="word2"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="word1||word2"/>
+                    <bl:property name="fieldValue" value="#word1||#word2"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition2" value="copyFieldValueAction0"/>
+            </bl:action>
+            <bl:action id="copyFieldValueAction0" type="copyFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="sourceFieldName" value="word1||word2"/>
+                    <bl:property name="targetFieldName" value="word1||word2"/>
+                </bl:actionConfig>
+                <bl:target id="copyFieldValueAction0.transition0" value="endAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

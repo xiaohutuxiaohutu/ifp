@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="dubbo.sameAI" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstAlias" desc="登录名"/>
+            <bl:dataField name="cstPwd" desc="登录密码"/>
+            <bl:dataField name="cstType" desc="客户类型"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstNameSpell" desc="客户姓名拼音"/>
+            <bl:dataField name="cstSex" desc="客户性别(M:男,F:女)" defaultValue="M"/>
+            <bl:dataField name="cstAge" desc="年龄"/>
+            <bl:dataField name="cstBirthDay" desc="生日"/>
+            <bl:dataField name="cstCertType" desc="证件类型"/>
+            <bl:dataField name="cstCertNo" desc="证件号码"/>
+            <bl:dataField name="cstCertValid" desc="证件有效期"/>
+            <bl:dataField name="cstMobileNo" desc="移动电话"/>
+            <bl:dataField name="cstTel" desc="联系电话"/>
+            <bl:dataField name="cstFax" desc="联系传真"/>
+            <bl:dataField name="cstEmail" desc="电子邮箱"/>
+            <bl:dataField name="cstPostCode" desc="邮政编码"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="cstNo"/>
+            <bl:inField name="cstAlias"/>
+            <bl:inField name="cstPwd"/>
+            <bl:inField name="cstType"/>
+            <bl:inField name="cstName"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="cstPwd"/>
+            <bl:outField name="cstType"/>
+            <bl:outField name="cstName"/>
+            <bl:outField name="cstNameSpell"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="dubboFlowAction0" type="dubboFlowAction">
+                <bl:actionConfig>
+                    <bl:property name="logicId" value="sameAI"/>
+                </bl:actionConfig>
+                <bl:target id="dubboFlowAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="cstNo||cstAlias||cstPwd||cstType||cstName"/>
+                    <bl:property name="fieldValue" value="11||22||33||44||55"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction0.transition0" value="dubboFlowAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition2" value="setFieldValueAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

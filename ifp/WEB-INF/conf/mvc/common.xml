@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cl="http://www.ynet.com/cl"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/cl http://www.ynet.com/cl.xsd">
+    
+    <cl:common id="ifpCommon" scope="application" desc="test">
+		<cl:interceptors>
+			<!-- 此处设置公用的拦截器 -->
+			<cl:interceptor name="ValidationInterceptor" desc="testName" />
+		</cl:interceptors>
+		<cl:views>
+			<cl:view requestType="K" ref="IFPJsonView"></cl:view>
+			<cl:view requestType="J" ref="IFPJsonView"></cl:view>
+			<cl:view requestType="X" ref="IFPXmlView"></cl:view>
+		</cl:views>
+	</cl:common>
+    
+</beans>

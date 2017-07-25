@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document>
+    <header>
+    	<transCode>b201001</transCode>
+        <channelCode>1001</channelCode>
+        <channelFlow>123456789</channelFlow>
+        <channelDate>20161027</channelDate>
+        <channelTime>143030</channelTime>
+    </header>
+    <body>
+    	<hostReturnCode>01</hostReturnCode>
+        <cstNo>$cstNo</cstNo>
+        <cstName>$cstName</cstName>
+        <cstCertType>$cstCertType</cstCertType>
+        <cstCertNo>$cstCertNo</cstCertNo>
+    </body>
+</Document>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <bean id="mbHttpService" class="com.ifp.gateway.service.HttpService">
+        <property name="connectorList">
+            <list>
+                <ref bean="mbHttpConnector"/>
+            </list>
+        </property>
+        <!-- <property name="requestType" value="template" /> -->
+        <property name="requestFormater" ref="xmlFormater1" />
+        <!-- <property name="requestFormater" ref="kvFormatter" /> -->
+        <property name="responseFormater" ref="xmlFormater1" />
+        <!-- <property name="responseFormater" ref="passMessageFormatter" /> -->
+        <property name="processor" ref="mbProcessor" />
+    </bean>
+    
+    <bean id="mbHttpConnector" class="com.ifp.gateway.connector.HttpConnector1" init-method="init">
+        <!-- <property name="url" value="http://127.0.0.1:8080/ifp-web/testJspAction.do" /> -->
+        <property name="url" value="http://127.0.0.1:8091/testWeb/testJspAction.do" />
+        <property name="maxSize" value="500" />
+    </bean>
+    
+    <bean id="mbProcessor" class="com.ifp.demo.gateway.processor.PbProcessor" />
+</beans>

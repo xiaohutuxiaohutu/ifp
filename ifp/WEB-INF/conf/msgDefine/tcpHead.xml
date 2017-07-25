@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:msg="http://www.ynet.com/msg"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/msg http://www.ynet.com/msg.xsd">
+
+	<msg:head id="tcpHead">
+		<msg:field name="type" cnname="报文格式" length="1" description="J：JSON，X：XML，S：SOAP，I：ISO8583，F：File" />
+		<msg:field name="encry" cnname="正文加密。" length="1" description="0/不传：不加密，1：AES，2：RSA" />
+		<msg:field name="mulPacket" cnname="多包标记。" length="2" description="00：单包，01.99：多包的序号" />
+		<msg:field name="size" cnname="正文长度。" length="10" description="1MB=1048576Byte，普通报文长度最大2M" />
+		<msg:field name="obligate" cnname="预留字段" length="6" description="预留位置" notnull="false" />
+		<msg:field name="channel" cnname="接入渠道" length="10" />
+		<msg:field name="transCode" cnname="交易代码" length="10" />
+		<msg:field name="version" cnname="报文版本" length="10" notnull="false" default="100" />
+		<msg:field name="channelFlow" cnname="渠道流水号" length="10" description="同一渠道不能重复上送" />
+		<msg:field name="channelDate" cnname="渠道日期" length="8" description="YYYYMMDD" />
+		<msg:field name="channelTime" cnname="渠道时间" length="6" description="HHMMSS" />
+		<msg:field name="reqID" cnname="请求id" length="32" />
+		<msg:field name="CID" cnname="call id" length="32" />
+		<msg:field name="PCID" cnname="parent call id" length="32" />
+	</msg:head>
+
+</beans>

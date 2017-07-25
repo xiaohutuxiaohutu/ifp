@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cl="http://www.ynet.com/cl"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/cl http://www.ynet.com/cl.xsd">
+	
+	<cl:mvcAction id="testAction" bid="test.test" requestType="K">
+		<cl:interceptors>
+			<cl:interceptor name="testInterceptor" desc="testName">
+				<cl:attribute name="test" value="222" />
+			</cl:interceptor>
+		</cl:interceptors>
+		<!-- 设置输入校验 -->
+		<cl:input>
+			<cl:inField name="cstNo" defaultValue="110" sourceName="cstNo" checkType="request;fieldLength{1};" desc="客户号" />
+			<cl:inField name="cstName" defaultValue="111" sourceName="cstName" checkType="request;pattern{[\u4e00-\u9fa5]+};" desc="客户名称" />
+		</cl:input>
+		<!-- 设置输出元素 -->
+    	<cl:output>
+    		<cl:outField name="cstNo" targetName="cstNO" />
+    	</cl:output>
+	</cl:mvcAction>
+	
+	<cl:mvcAction id="testAction2" bid="test.test" requestType="X">
+		<cl:interceptors>
+			<cl:interceptor name="testInterceptor" desc="testName">
+				<cl:attribute name="test" value="222" />
+			</cl:interceptor>
+		</cl:interceptors>
+	</cl:mvcAction>
+	
+	<cl:mvcAction id="testAction3" bid="test.test" requestType="J">
+		<cl:interceptors>
+			<cl:interceptor name="testInterceptor" desc="testName">
+				<cl:attribute name="test" value="222" />
+			</cl:interceptor>
+		</cl:interceptors>
+	</cl:mvcAction>
+
+    <cl:mvcAction id="testSessionAction" bid="test.test" sessionName="IFP_SID">
+    	<cl:interceptors>
+			<cl:interceptor name="LoginInterceptor" desc="登陆拦截器" />
+		</cl:interceptors>
+    </cl:mvcAction>
+    
+    <cl:mvcAction id="queryOneRecordAction" bid="db.queryOneRecord" /> 
+
+    <cl:mvcAction id="queryMulRecordsAction" bid="db.queryMulRecords" /> 
+
+    <cl:mvcAction id="queryMulRecordsPageAction" bid="db.queryMulRecordsPage" /> 
+
+    <cl:mvcAction id="httpAction" bid="gateway.http" /> 
+
+    <cl:mvcAction id="tcpipShortAction" bid="gateway.tcpipShort" /> 
+
+    <cl:mvcAction id="loginAction" bid="login.signIn" sessionName="IFP_SID">
+    	<cl:interceptors>
+			<cl:interceptor name="UserInfoManageInterceptor" desc="内管后置拦截器，用于将登陆用户保存到session中" />
+		</cl:interceptors>
+    </cl:mvcAction>
+    
+    <cl:mvcAction id="testFtpUploadAction" bid="ftp.testFtpUpload" />
+    <cl:mvcAction id="testFtpDownloadAction" bid="ftp.testFtpDownload" />
+    
+    <cl:mvcAction id="getUserInfoAction1" bid="dubbo.getUserInfo" dubboFlow="false" />
+    <cl:mvcAction id="getUserInfoAction2" bid="getUserInfoCL" dubboFlow="true">
+    	<cl:output>
+    		<cl:outField name="cstNo" targetName="cstNo" />
+    		<cl:outField name="cstName" targetName="cstName" />
+    		<cl:outField name="pageNo" targetName="pageNo" />
+    	</cl:output>
+    </cl:mvcAction>
+    
+    <cl:mvcAction id="testJspAction" bid="testJsp" requestType="K" execFlow="false">
+		<cl:interceptors>
+			<cl:interceptor name="GatewayInterceptor" desc="testName">
+				<cl:attribute name="commClient" value="mockClient" />
+				<cl:attribute name="transCode" value="mb100001" />
+				<cl:attribute name="channelId" value="mb" />
+			</cl:interceptor>
+		</cl:interceptors>
+		<!-- 设置输出元素 -->
+    	<cl:output>
+    		<cl:outField name="passMessageInOne" targetName="passMessageInOne" />
+    	</cl:output>
+		<cl:views>
+            <cl:view requestType="K" ref="IFPStreamView"></cl:view>
+        </cl:views>
+	</cl:mvcAction>
+	
+	<cl:mvcAction id="testAction1" bid="test.test" requestType="J">
+		<cl:interceptors>
+			<cl:interceptor name="testInterceptor" desc="testName">
+				<cl:attribute name="test" value="222" />
+			</cl:interceptor>
+		</cl:interceptors>
+	</cl:mvcAction>
+</beans>

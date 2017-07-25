@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cl="http://www.ynet.com/cl"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/cl http://www.ynet.com/cl.xsd">
+	<!-- <cl:mvcAction id="helloAction" bid="demo.helloWorld" tranCode="CC000009" >
+		<cl:views>
+            <cl:view requestType="K" ref="IFPJsonView"></cl:view>
+            <cl:view requestType="J" ref="IFPJsonView"></cl:view>
+        </cl:views>
+	</cl:mvcAction> -->
+	<cl:mvcAction id="sqlDemo" bid="demo.sqlDemo" tranCode="CC000010" >
+		<cl:views>
+            <cl:view requestType="K" ref="IFPJsonView"></cl:view>
+            <cl:view requestType="J" ref="IFPJsonView"></cl:view>
+        </cl:views>
+	</cl:mvcAction>
+</beans>

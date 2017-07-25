@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="test" name="测试" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstAlias" desc="登录名"/>
+            <bl:dataField name="cstType" desc="客户类型"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstNameSpell" desc="客户姓名拼音"/>
+            <bl:dataField name="cstSex" desc="客户性别(M:男,F:女)" defaultValue="M"/>
+            <bl:dataField name="cstAge" desc="年龄"/>
+            <bl:dataField name="cstBirthDay" desc="生日"/>
+            <bl:dataField name="cstCertType" desc="证件类型"/>
+            <bl:dataField name="cstCertNo" desc="证件号码"/>
+            <bl:dataField name="transTime" desc="交易时间"/>
+            <bl:dataList name="userAccountList" desc="账户集合">
+                <bl:columnField name="accNo" desc="账户"/>
+                <bl:columnField name="accAlias" desc="账户别名"/>
+                <bl:columnField name="accState" desc="账户状态"/>
+                <bl:columnField name="accType" desc="账户类型"/>
+                <bl:columnField name="accAmt" desc="剩余金额"/>
+                <bl:columnField name="accOpenBranch" desc="开户分行"/>
+                <bl:columnField name="accOpenNode" desc="开户网点"/>
+                <bl:columnField name="accCreateTime" desc="创建时间"/>
+                <bl:columnField name="accFreezeTime" desc="冻结时间"/>
+                <bl:columnField name="accCancelTime" desc="销户时间"/>
+                <bl:columnField name="accLimit" desc="账户限额"/>
+            </bl:dataList>
+            <bl:dataList name="testList" desc="测试集合">
+                <bl:columnField name="field1" desc="字段1"/>
+                <bl:columnField name="field2" desc="字段2"/>
+                <bl:dataList name="testList2" desc="测试集合2">
+                    <bl:columnField name="field3" desc="字段1"/>
+                    <bl:columnField name="field4" desc="字段2"/>
+                </bl:dataList>
+            </bl:dataList>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="testList"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="cstNo"/>
+            <bl:outField name="cstAlias"/>
+            <bl:outField name="cstName"/>
+            <bl:outField name="userAccountList"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction2" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="getCurrentSystemTimeAction0" type="getCurrentSystemTimeAction">
+                <bl:actionConfig>
+                    <bl:property name="timeField" value="transTime"/>
+                    <bl:property name="timeFormat" value="yyyyMMddHHmmss"/>
+                </bl:actionConfig>
+                <bl:target id="getCurrentSystemTimeAction0.transition4" value="setFieldValueAction3"/>
+            </bl:action>
+            <bl:action id="setFieldValueAction3" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="transTime"/>
+                    <bl:property name="fieldValue" value="20140708"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction3.transition1" value="endAction2"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition6" value="getCurrentSystemTimeAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

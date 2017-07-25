@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="login" name="登录测试" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="errorCode" desc="错误代码"/>
+            <bl:dataField name="errorMsg" desc="错误信息" defaultValue="测试错误信息"/>
+        </bl:dataDictionary>
+        <bl:input/>
+        <bl:output/>
+        <bl:flow>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="subFlowAction0" type="subFlowProxyAction">
+                <bl:actionConfig>
+                    <bl:property name="subFlowId" value="subFlow0"/>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="transType" value="5"/>
+                </bl:actionConfig>
+            </bl:action>
+        </bl:flow>
+        <bl:subFlow id="subFlow0">
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+        </bl:subFlow>
+    </bl:businessLogic>
+</beans>

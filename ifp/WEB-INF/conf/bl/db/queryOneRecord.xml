@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="db.queryOneRecord" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstSex" desc="客户性别(M:男,F:女)" defaultValue="M"/>
+            <bl:dataField name="cstAge" desc="年龄"/>
+        </bl:dataDictionary>
+        <bl:input/>
+        <bl:output>
+            <bl:outField name="cstNo"/>
+            <bl:outField name="cstName"/>
+            <bl:outField name="cstSex"/>
+            <bl:outField name="cstAge"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="sqlQueryOneAction0" type="sqlQueryOneAction">
+                <bl:actionConfig>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="querySql" value="select IFP_USERID, IFP_USERNAME, IFP_MOBILE, IFP_CERTTYPE from IFP_USER where IFP_USERID='10000'"/>
+                    <bl:property name="outputFields" value="cstNo||cstName||cstSex||cstAge"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryOneAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition0" value="sqlQueryOneAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

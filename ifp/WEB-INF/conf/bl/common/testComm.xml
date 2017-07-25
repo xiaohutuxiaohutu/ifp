@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="common.testComm" common="true">
+        <bl:dataDictionary>
+            <bl:dataList name="cstList">
+                <bl:columnField name="cstNo" desc="客户编号"/>
+                <bl:columnField name="cstName" desc="客户姓名"/>
+                <bl:columnField name="cstSex" desc="客户性别(M:男,F:女)"/>
+                <bl:columnField name="cstAge" desc="年龄"/>
+            </bl:dataList>
+        </bl:dataDictionary>
+        <bl:input/>
+        <bl:output>
+            <bl:outField name="cstList"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="errorCode||errorMsg"/>
+                    <bl:property name="fieldValue" value="20000||二万"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction0.transition0" value="throwExceptionAction0"/>
+            </bl:action>
+            <bl:action id="sqlQueryMultAction0" type="sqlQueryMultAction">
+                <bl:actionConfig>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="querySql" value="select  ifp_userid, ifp_username  from ifp_user"/>
+                    <bl:property name="listName" value="cstList"/>
+                    <bl:property name="outputFields" value="cstNo||cstName"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryMultAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition3" value="setFieldValueAction0"/>
+            </bl:action>
+            <bl:action id="throwExceptionAction0" type="throwExceptionAction">
+                <bl:actionConfig>
+                    <bl:property name="errorCode" value="#errorCode"/>
+                    <bl:property name="errorMsg" value="#errorMsg"/>
+                </bl:actionConfig>
+                <bl:target id="throwExceptionAction0.transition0" value="endAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

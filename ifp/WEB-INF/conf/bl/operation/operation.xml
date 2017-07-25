@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="operation.operation" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="amt1" desc="金额1"/>
+            <bl:dataField name="amt2" desc="金额2"/>
+            <bl:dataField name="operationResult" desc="运算结果"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="amt1"/>
+            <bl:inField name="amt2"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="operationResult"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="amtSimpleAddSubAction0" type="amtSimpleAddSubAction">
+                <bl:actionConfig>
+                    <bl:property name="amtFields" value="amt1||amt2"/>
+                    <bl:property name="operation" value="add"/>
+                    <bl:property name="outputField" value="operationResult"/>
+                </bl:actionConfig>
+                <bl:target id="amtSimpleAddSubAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition2" value="testPrintContextAction0"/>
+            </bl:action>
+            <bl:action id="testPrintContextAction0" type="testPrintContextAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="amt1||amt2"/>
+                </bl:actionConfig>
+                <bl:target id="testPrintContextAction0.transition0" value="amtSimpleAddSubAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:msg="http://www.ynet.com/msg"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/msg http://www.ynet.com/msg.xsd">
+
+	<!-- 定长示例报文体 -->
+	<msg:body id="ieBody">
+		<msg:field name="errorCode" cnname="错误码" length="1" description="0：成功；1：出错；" />
+		<msg:field name="errorMsg" cnname="错误信息" length="20"  />
+	</msg:body>
+
+</beans>

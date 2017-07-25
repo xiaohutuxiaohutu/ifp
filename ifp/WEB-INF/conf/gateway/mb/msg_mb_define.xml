@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gw="http://www.ynet.com/gw"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.ynet.com/gw http://www.ynet.com/gw.xsd">
+	<gw:message id="mb100001_send" name="Document">
+        <gw:group name="header">
+            <gw:field name="channelCode" pattern="head" />
+            <gw:field name="channelFlow" pattern="head" />
+            <gw:field name="channelDate" pattern="head" />
+            <gw:field name="channelTime" pattern="head" />
+        </gw:group>
+        <gw:group name="body">
+            <gw:field name="cNo" refName="cstNo" />
+            <gw:field name="cName" refName="cstName" />
+            <gw:field name="cSex" refName="cstSex" />
+            <gw:field name="cAge" refName="cstAge" />
+        </gw:group>
+    </gw:message>
+    
+    <gw:message id="mb100001_receive" name="Document">
+        <gw:group name="header">
+            <gw:field name="channelCode" pattern="head" />
+            <gw:field name="channelFlow" pattern="head" />
+            <gw:field name="channelDate" pattern="head" />
+            <gw:field name="channelTime" pattern="head" />
+        </gw:group>
+        <gw:group name="body">
+            <gw:field name="cNo" refName="cstNo" />
+            <gw:field name="cName" refName="cstName" />
+            <gw:field name="cSex" refName="cstSex" />
+            <gw:field name="cAge" refName="cstAge" />
+        </gw:group>
+    </gw:message>
+</beans>

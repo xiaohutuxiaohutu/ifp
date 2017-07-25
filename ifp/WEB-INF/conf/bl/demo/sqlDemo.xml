@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="demo.sqlDemo" name="单挑查询" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="IFP_USERID" desc="用户ID"/>
+            <bl:dataField name="IFP_USERNAME" desc="用户名"/>
+            <bl:dataField name="IFP_PASSWORD" desc="密码"/>
+            <bl:dataField name="logonId" desc="登陆Id"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="logonId"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="logonId"/>
+            <bl:outField name="IFP_USERID"/>
+            <bl:outField name="IFP_USERNAME"/>
+            <bl:outField name="IFP_PASSWORD"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="sqlQueryOneAction0" type="sqlQueryOneAction">
+                <bl:actionConfig>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="querySql" value="select ifp_userid,ifp_username,ifp_password from ifp_user where ifp_userid=#logonId"/>
+                    <bl:property name="outputFields" value="cstNo||cstPwd"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryOneAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition1" value="sqlQueryOneAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

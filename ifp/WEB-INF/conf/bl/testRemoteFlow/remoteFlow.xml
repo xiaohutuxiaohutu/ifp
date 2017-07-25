@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="testRemoteFlow.remoteFlow" name="直接调远程flow" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="logicId" desc="blogicId"/>
+            <bl:dataField name="logicResult" desc="执行完blogic后的返回内容"/>
+            <bl:dataField name="logonPassword" desc="密码"/>
+            <bl:dataField name="checkCodeText" desc="验证码"/>
+            <bl:dataField name="result" desc="结果"/>
+            <bl:dataField name="logonId" desc="登陆Id"/>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstPwd" desc="登录密码"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="logicId"/>
+            <bl:inField name="logonPassword"/>
+            <bl:inField name="checkCodeText"/>
+            <bl:inField name="logonId"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="logicResult"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="dubboFlowAction0" type="dubboFlowAction">
+                <bl:actionConfig>
+                    <bl:property name="logicId" value="login"/>
+                </bl:actionConfig>
+                <bl:target id="dubboFlowAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition0" value="dubboFlowAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

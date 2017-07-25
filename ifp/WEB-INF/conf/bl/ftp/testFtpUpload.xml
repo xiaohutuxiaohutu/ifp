@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="ftp.testFtpUpload" common="false">
+        <bl:dataDictionary/>
+        <bl:input/>
+        <bl:output/>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="ftpUploadAction0" type="ftpUploadAction">
+                <bl:actionConfig>
+                    <bl:property name="ftpServiceId" value="test"/>
+                    <bl:property name="pathType" value="2"/>
+                    <bl:property name="sourceFilePath" value="g:/test/"/>
+                    <bl:property name="targetFilePath" value="/home/admin/test/"/>
+                    <bl:property name="targetFileName" value=""/>
+                    <bl:property name="createFlag" value="true"/>
+                </bl:actionConfig>
+                <bl:target id="ftpUploadAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value=""/>
+                    <bl:property name="fieldValue" value=""/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition1" value="ftpUploadAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

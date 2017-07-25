@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="dubbo.getUserInfo" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstCertNo" desc="证件号码"/>
+            <bl:dataField name="cstMobileNo" desc="移动电话"/>
+            <bl:dataField name="cstCertType" desc="证件类型"/>
+            <bl:dataField name="logonId" desc="登陆Id"/>
+            <bl:dataField name="pageNo" desc="当前页码"/>
+            <bl:dataList name="cstList">
+                <bl:columnField name="cstNo" desc="客户编号"/>
+                <bl:columnField name="cstName" desc="客户姓名"/>
+                <bl:columnField name="cstSex" desc="客户性别(M:男,F:女)"/>
+                <bl:columnField name="cstAge" desc="年龄"/>
+            </bl:dataList>
+            <bl:dataList name="tList">
+                <bl:dataList name="tList2">
+                    <bl:columnField name="a" desc="a"/>
+                    <bl:columnField name="b" desc="b"/>
+                    <bl:columnField name="c" desc="c"/>
+                </bl:dataList>
+            </bl:dataList>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="cstNo"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="cstNo"/>
+            <bl:outField name="cstName"/>
+            <bl:outField name="cstCertNo"/>
+            <bl:outField name="cstMobileNo"/>
+            <bl:outField name="cstCertType"/>
+            <bl:outField name="logonId"/>
+            <bl:outField name="pageNo"/>
+            <bl:outField name="cstList"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="dubboFlowAction0" type="dubboFlowAction">
+                <bl:actionConfig>
+                    <bl:property name="logicId" value="getUserInfo"/>
+                </bl:actionConfig>
+                <bl:target id="dubboFlowAction0.transition1" value="messageCommAction0"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="messageCommAction0" type="messageCommAction">
+                <bl:actionConfig>
+                    <bl:property name="commClientName" value="mockClient"/>
+                    <bl:property name="trxCode" value="b201001"/>
+                    <bl:property name="sysCode" value="pb"/>
+                </bl:actionConfig>
+                <bl:target id="messageCommAction0.transition1" value="testPrintContextAction0"/>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="logonId"/>
+                    <bl:property name="fieldValue" value="10001"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction0.transition0" value="dubboFlowAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition5" value="setFieldValueAction0"/>
+            </bl:action>
+            <bl:action id="testPrintContextAction0" type="testPrintContextAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value=""/>
+                </bl:actionConfig>
+                <bl:target id="testPrintContextAction0.transition0" value="endAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

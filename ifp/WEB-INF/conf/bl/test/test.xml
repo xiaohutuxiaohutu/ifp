@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="test.test" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstSex" desc="客户性别(M:男,F:女)" defaultValue="M"/>
+            <bl:dataField name="cstAge" desc="年龄"/>
+            <bl:dataList name="cstList">
+                <bl:columnField name="cstNo" desc="客户编号"/>
+                <bl:columnField name="cstName" desc="客户姓名"/>
+                <bl:columnField name="cstSex" desc="客户性别(M:男,F:女)"/>
+                <bl:columnField name="cstAge" desc="年龄"/>
+            </bl:dataList>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="cstNo"/>
+            <bl:inField name="cstName"/>
+            <bl:inField name="cstSex"/>
+            <bl:inField name="cstAge"/>
+            <bl:inField name="cstList"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="cstNo"/>
+            <bl:outField name="cstName"/>
+            <bl:outField name="cstSex"/>
+            <bl:outField name="cstAge"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="asynFlowAction0" type="asynFlowAction">
+                <bl:actionConfig>
+                    <bl:property name="asynFlowId" value="asynFlow0"/>
+                </bl:actionConfig>
+                <bl:target id="asynFlowAction0.transition0" value="setFieldValueAction0"/>
+            </bl:action>
+            <bl:action id="commonFlowAction0" type="commonFlowAction">
+                <bl:actionConfig>
+                    <bl:property name="commFlowId" value="common.testComm"/>
+                    <bl:property name="input" value=""/>
+                    <bl:property name="output" value=""/>
+                </bl:actionConfig>
+                <bl:target id="commonFlowAction0.transition0" condition="exception" value="testPrintContextAction0"/>
+                <bl:target id="commonFlowAction0.transition1" value="endAction0"/>
+            </bl:action>
+            <bl:action id="copyFieldValueAction0" type="copyFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="sourceFieldName" value="cstNo"/>
+                    <bl:property name="targetFieldName" value="cstName"/>
+                </bl:actionConfig>
+                <bl:target id="copyFieldValueAction0.transition0" value="getCurrentSystemTimeAction0"/>
+            </bl:action>
+            <bl:action id="copyFieldValueAction1" type="copyFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="sourceFieldName" value="cstSex"/>
+                    <bl:property name="targetFieldName" value="cstAge"/>
+                </bl:actionConfig>
+                <bl:target id="copyFieldValueAction1.transition1" value="setFieldValueAction2"/>
+            </bl:action>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="getCurrentSystemTimeAction0" type="getCurrentSystemTimeAction">
+                <bl:actionConfig>
+                    <bl:property name="timeField" value="cstSex"/>
+                    <bl:property name="timeFormat" value="yyyyMMddHHmmss"/>
+                </bl:actionConfig>
+                <bl:target id="getCurrentSystemTimeAction0.transition0" value="copyFieldValueAction1"/>
+            </bl:action>
+            <bl:action id="messageCommAction0" type="messageCommAction">
+                <bl:actionConfig>
+                    <bl:property name="commClientName" value="mockClient"/>
+                    <bl:property name="trxCode" value="mb100001"/>
+                    <bl:property name="sysCode" value="mb"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="cstNo"/>
+                    <bl:property name="fieldValue" value="10000"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction0.transition0" value="copyFieldValueAction0"/>
+            </bl:action>
+            <bl:action id="setFieldValueAction1" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="actionDesc" value="为错误信息赋值"/>
+                    <bl:property name="fieldName" value="errorCode||errorMsg"/>
+                    <bl:property name="fieldValue" value="ER0001||测试异常信息"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction1.transition2" value="setFieldValueAction2"/>
+            </bl:action>
+            <bl:action id="setFieldValueAction2" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="actionDesc" value="为客户号赋值"/>
+                    <bl:property name="fieldName" value="cstNo"/>
+                    <bl:property name="fieldValue" value="100000000"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction2.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="sqlQueryOneAction0" type="sqlQueryOneAction">
+                <bl:actionConfig>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="querySql" value="select ifp_userid from ifp_user where ifp_userid like '1000%'"/>
+                    <bl:property name="outputFields" value="cstNo"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryOneAction0.transition0" value="endAction0"/>
+                <bl:target id="sqlQueryOneAction0.transition1" condition="exception" value="setFieldValueAction2"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition9" value="commonFlowAction0"/>
+            </bl:action>
+            <bl:action id="testPrintContextAction0" type="testPrintContextAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value=""/>
+                </bl:actionConfig>
+                <bl:target id="testPrintContextAction0.transition0" value="endAction0"/>
+            </bl:action>
+        </bl:flow>
+        <bl:subFlow id="asynFlow0">
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition1" value="testPrintContextAction0"/>
+            </bl:action>
+            <bl:action id="testPrintContextAction0" type="testPrintContextAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value=""/>
+                </bl:actionConfig>
+                <bl:target id="testPrintContextAction0.transition0" value="endAction0"/>
+            </bl:action>
+        </bl:subFlow>
+    </bl:businessLogic>
+</beans>

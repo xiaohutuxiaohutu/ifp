@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cl="http://www.ynet.com/cl"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/cl http://www.ynet.com/cl.xsd">
+    <bean id="USER" class="com.ifp.demo.session.UserSessionInfo"></bean>
+	<!-- <cl:sessionName id="IFP_SID" maxInactiveInterval="50" keepInTouch="true" forceExpirationPeriod="60" saveCookie="true" cacheName="sessionCache" httpOnly="true" cookieSecure="false" > -->
+	<!-- <cl:sessionName id="IFP_SID" maxInactiveInterval="50" keepInTouch="true" forceExpirationPeriod="60" cacheName="sessionCache" > -->
+	<cl:sessionName id="IFP_SID" maxInactiveInterval="50" keepInTouch="true" forceExpirationPeriod="60" dataSourceName="mainDB" >
+		<!-- <cl:sessionInfoName name="USER" maxInactiveInterval="30" cacheName="sessionCache"/> -->
+	</cl:sessionName>
+</beans>

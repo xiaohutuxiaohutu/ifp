@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="common.getUserInfo" name="查询客户信息" common="true">
+        <bl:dataDictionary>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+            <bl:dataField name="cstAlias" desc="登录名"/>
+            <bl:dataField name="cstType" desc="客户类型"/>
+            <bl:dataField name="cstName" desc="客户姓名"/>
+            <bl:dataField name="cstNameSpell" desc="客户姓名拼音"/>
+            <bl:dataField name="cstSex" desc="客户性别(M:男,F:女)" defaultValue="M"/>
+            <bl:dataField name="cstAge" desc="年龄"/>
+            <bl:dataField name="cstBirthDay" desc="生日"/>
+            <bl:dataField name="cstCertType" desc="证件类型"/>
+            <bl:dataField name="cstCertNo" desc="证件号码"/>
+            <bl:dataField name="cstCertValid" desc="证件有效期"/>
+            <bl:dataField name="cstMobileNo" desc="移动电话"/>
+            <bl:dataField name="cstTel" desc="联系电话"/>
+            <bl:dataField name="cstFax" desc="联系传真"/>
+            <bl:dataField name="cstEmail" desc="电子邮箱"/>
+            <bl:dataField name="cstPostCode" desc="邮政编码"/>
+            <bl:dataField name="cstCountry" desc="所在国"/>
+            <bl:dataField name="cstProvince" desc="所在省"/>
+            <bl:dataField name="cstCity" desc="所在市"/>
+            <bl:dataField name="cstAddress" desc="家庭住址"/>
+            <bl:dataField name="cstLevel" desc="客户级别"/>
+            <bl:dataField name="cstPoint" desc="客户积分"/>
+            <bl:dataField name="cstIcon" desc="客户头像"/>
+            <bl:dataField name="cstCheckMsg" desc="客户预留信息"/>
+            <bl:dataField name="cstLastLogonTime" desc="客户上次登录时间"/>
+            <bl:dataField name="cstLastLogonIP" desc="客户上次登录IP"/>
+            <bl:dataField name="cstLastLogonMAC" desc="客户上次登录MAC"/>
+            <bl:dataField name="cstCurrLogonTime" desc="客户本次登录时间"/>
+            <bl:dataField name="cstCurrLogonIP" desc="客户本次登录IP"/>
+            <bl:dataField name="cstCurrLogonMAC" desc="客户本次登录MAC"/>
+            <bl:dataField name="cstCreateTime" desc="创建时间"/>
+            <bl:dataField name="cstUpdateTime" desc="更新时间"/>
+            <bl:dataField name="cstFreezeTime" desc="冻结时间"/>
+            <bl:dataField name="cstCancelTime" desc="销户时间"/>
+            <bl:dataField name="cstMarry" desc="婚姻状况(Y:已婚,N:未婚)" defaultValue="N"/>
+            <bl:dataField name="cstDegree" desc="学历"/>
+            <bl:dataField name="cstPwd" desc="登录密码"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="cstNo"/>
+            <bl:inField name="cstCertNo"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="cstNo"/>
+            <bl:outField name="cstAlias"/>
+            <bl:outField name="cstType"/>
+            <bl:outField name="cstName"/>
+            <bl:outField name="cstNameSpell"/>
+            <bl:outField name="cstSex"/>
+            <bl:outField name="cstAge"/>
+            <bl:outField name="cstBirthDay"/>
+            <bl:outField name="cstCertType"/>
+            <bl:outField name="cstCertNo"/>
+            <bl:outField name="cstCertValid"/>
+            <bl:outField name="cstMobileNo"/>
+            <bl:outField name="cstTel"/>
+            <bl:outField name="cstFax"/>
+            <bl:outField name="cstEmail"/>
+            <bl:outField name="cstPostCode"/>
+            <bl:outField name="cstCountry"/>
+            <bl:outField name="cstProvince"/>
+            <bl:outField name="cstCity"/>
+            <bl:outField name="cstAddress"/>
+            <bl:outField name="cstLevel"/>
+            <bl:outField name="cstPoint"/>
+            <bl:outField name="cstIcon"/>
+            <bl:outField name="cstCheckMsg"/>
+            <bl:outField name="cstLastLogonTime"/>
+            <bl:outField name="cstLastLogonIP"/>
+            <bl:outField name="cstLastLogonMAC"/>
+            <bl:outField name="cstCurrLogonTime"/>
+            <bl:outField name="cstCurrLogonIP"/>
+            <bl:outField name="cstCurrLogonMAC"/>
+            <bl:outField name="cstCreateTime"/>
+            <bl:outField name="cstUpdateTime"/>
+            <bl:outField name="cstFreezeTime"/>
+            <bl:outField name="cstCancelTime"/>
+            <bl:outField name="cstMarry"/>
+            <bl:outField name="cstDegree"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="cstNo||cstCertType||cstCertNo||cstMobileNo"/>
+                    <bl:property name="fieldValue" value="1000000||1||441421199901123824||13799916811"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition0" value="setFieldValueAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

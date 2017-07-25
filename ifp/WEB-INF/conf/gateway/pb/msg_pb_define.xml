@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gw="http://www.ynet.com/gw"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.ynet.com/gw http://www.ynet.com/gw.xsd">
+
+    <gw:message id="pb100001_receive" name="Document">
+        <gw:group name="header">
+            <gw:field name="channelCode" pattern="head" />
+            <gw:field name="channelFlow" pattern="head" />
+            <gw:field name="channelDate" pattern="head" />
+            <gw:field name="channelTime" pattern="head" />
+        </gw:group>
+        <gw:group name="body">
+            <gw:field name="cstNo" refName="cstNo" />
+            <gw:field name="cstName" refName="cstName" />
+            <gw:field name="cstSex" refName="cstSex" />
+            <gw:field name="cstAge" refName="cstAge" />
+        </gw:group>
+    </gw:message>
+    
+    <gw:message id="b201001_receive" name="Document">
+        <gw:group name="ReqHdr">
+        	<gw:group name="BankCommHeader">
+	            <gw:field name="f1" pattern="head" />
+	            <gw:field name="transCode" pattern="head" />
+        	</gw:group>
+        	<gw:field name="aa" pattern="head" />
+        </gw:group>
+        <gw:group name="Content">
+            <gw:field name="f3" refName="cstNo" />
+            <gw:field name="f4" refName="cstName" />
+            <gw:field name="f5" refName="cstCertType" />
+            <gw:field name="f6" refName="cstCertNo" />
+            <gw:list name="f10" refName="cstList">
+            	<gw:field name="l1" refName="cstNo" />
+            	<gw:field name="l2" refName="cstName" />
+            </gw:list>
+        </gw:group>
+    </gw:message>
+</beans>

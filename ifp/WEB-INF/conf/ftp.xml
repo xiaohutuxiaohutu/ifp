@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- FTP客户端处理类 -->
+    <bean id="ftpClientHandle" class="com.ifp.core.ftp.client.FtpClientHandle">
+        <property name="ftpServiceMap">
+            <map>
+                <!-- <entry key="test" value-ref="ftpClientService" /> -->
+                <entry key="test" value-ref="sftpClientService" />
+            </map>
+        </property>
+    </bean>
+   
+    <!-- FTP客户端服务类 -->
+    <bean id="ftpClientService" class="com.ifp.core.ftp.client.FtpClientService">
+        <property name="ip" value="192.168.2.109" />
+        <property name="port" value="21" />
+        <property name="userName" value="sam" />
+        <property name="password" value="123123" />
+    </bean>
+    
+    <!-- SFTP客户端服务类 -->
+    <bean id="sftpClientService" class="com.ifp.core.ftp.client.SFtpClientService">
+        <property name="ip" value="192.168.3.102" />
+        <property name="port" value="22" />
+        <property name="userName" value="admin" />
+        <property name="password" value="123456" />
+    </bean>
+</beans>

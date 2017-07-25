@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<import resource="classpath*:config/applicationContext.xml" />
+    <import resource="classpath*:config/**/*.xml" />
+    
+    <bean id="systemConf" class="com.ifp.core.base.SystemConf">
+        <property name="confMap">
+            <map>
+                <entry key="appCode" value="A1" />
+                <entry key="webAppRootKey" value="base.root" />
+                <entry key="errorInfoLocation" value="header" />
+                <entry key="codeWriteFileFlag" value="false" />
+                <entry key="outParamsFilterFlag" value="true" />
+                <!-- 前置拦截器组前置拦截处理 -->
+                <entry key="beforeInterceptorArray">
+                	<array value-type="java.lang.String">
+                		<value>ValidationHeaderInterceptor</value>
+                	</array>
+                </entry>
+                <!-- 前置拦截器组后置拦截处理 -->
+               <entry key="afterInterceptorArray">
+                	<array value-type="java.lang.String" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+     
+    <bean id="IFPJsonView" class="com.ifp.web.servlet.view.IFPJsonView" lazy-init="false">
+        <property name="processor" ref="JSONProcessor" />
+        <property name="headerMap">
+        	<map>
+        		<entry key="X-Powerd-By" value="" />
+        	</map>
+        </property>
+    </bean>
+    
+    <!-- <bean id="errorCodeFactory" class="com.ifp.core.errorcode.IFPErrorCodeFactory">
+    	<property name="dataSource" value="mainDB"></property>
+    	<property name="initSql">
+    		<value>select ifp_errorCode,ifp_errorMsg,ifp_language,ifp_level,ifp_channel,ifp_syscode from errorCode</value>
+    	</property>
+    	<property name="dataSourceHandle" ref="dataSourceHandle"></property>
+    </bean> -->
+</beans>

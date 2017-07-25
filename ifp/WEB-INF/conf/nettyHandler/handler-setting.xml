@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!-- ==================== ip过滤 ===================== -->
+	<util:constant id="IP_ACCEPT" static-field="io.netty.handler.ipfilter.IpFilterRuleType.ACCEPT" /><!-- 允许ip -->
+	<util:constant id="IP_REJECT" static-field="io.netty.handler.ipfilter.IpFilterRuleType.REJECT" /><!-- 排除ip -->
+
+	<!-- ip过滤设置 -->
+	<bean id="ipFilterHandler" class="com.ifp.web.netty.handler.IpFilterHandler" lazy-init="true">
+		<constructor-arg>
+			<list>
+				<!-- ip过滤规则设置，由上到下，先匹配的先生效 -->
+				<!-- <ref bean="localhost" /> -->
+				<bean class="io.netty.handler.ipfilter.IpSubnetFilterRule" lazy-init="true">
+					<constructor-arg value="192.168.2.120" /><!-- 过滤地址-->
+					<constructor-arg value="32" /><!-- ip4[0,32]; ip6[0,128] -->
+					<constructor-arg ref="IP_REJECT" /><!-- 过滤类型 -->
+				</bean>
+				<bean class="io.netty.handler.ipfilter.IpSubnetFilterRule" lazy-init="true">
+					<constructor-arg value="127.0.0.1" /><!-- 过滤地址-->
+					<constructor-arg value="32" /><!-- ip4[0,32]; ip6[0,128] -->
+					<constructor-arg ref="IP_ACCEPT" /><!-- 过滤类型 -->
+				</bean>
+			</list>
+		</constructor-arg>
+		<!-- 这里可以配多个 -->
+	</bean>
+
+	<!-- ==================== 心跳 ===================== -->
+	<!-- 心跳超时时间设置 -->
+	<util:constant id="MILLISECONDS" static-field="java.util.concurrent.TimeUnit.MILLISECONDS" /><!-- 毫秒为单位 -->
+	<util:constant id="SECONDS" static-field="java.util.concurrent.TimeUnit.SECONDS" /><!-- 秒为单位 -->
+	<bean id="idleStateHandler" class="com.ifp.web.netty.handler.IdleStateHandler" lazy-init="true" scope="prototype">
+		<constructor-arg index="0" value="60" /><!-- 读超时 -->
+		<constructor-arg index="1" value="60" /><!-- 写超时 -->
+		<constructor-arg index="2" value="60" /><!-- 空闲时间 -->
+		<constructor-arg index="3" ref="SECONDS"/><!-- 心跳时间单位 -->
+	</bean>
+
+	<!-- 心跳机制（如果不需要心跳，可以去除） -->
+	<bean id="heartbeatHandler" class="com.ifp.web.netty.handler.HeartbeatHandler" lazy-init="true" scope="prototype">
+		<property name="maxUnRecPingTimes" value="3" /><!-- 没收到心跳报文N次，就关闭连接 -->
+	</bean>
+
+	<!-- ==================== 粘包 ===================== -->
+	<!-- 接收报文时，定义报文：允许的最大长度..、用多少位来记录、..、过滤多少位声明长度用的字符 -->
+	<bean id="frameDecoder" class="com.ifp.web.netty.handler.LengthFieldBasedFrameDecoder" lazy-init="true" scope="prototype">
+		<constructor-arg index="0" value="2147483647" /><!-- 报文最大长度 -->
+		<constructor-arg index="1" value="0" />
+		<constructor-arg index="2" value="2" /><!-- 报文前多少位是标记位 -->
+		<constructor-arg index="3" value="0" />
+		<constructor-arg index="4" value="2" /><!-- 将标记位过滤掉 -->
+	</bean>
+
+	<!-- 发送报文前，在前面加2位，用于声明报文总长度 -->
+	<bean id="frameEncoder" class="com.ifp.web.netty.handler.LengthFieldPrepender" lazy-init="true" scope="prototype">
+		<constructor-arg value="2" /><!-- 报文前多少位是标记位 -->
+	</bean>
+
+</beans>

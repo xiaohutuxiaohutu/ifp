@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document>
+    <header>
+        <channelCode>$channelCode</channelCode>
+        <channelFlow>$channelFlow</channelFlow>
+        <channelDate>$channelDate</channelDate>
+        <channelTime>$channelTime</channelTime>
+    </header>
+    <body>
+    	<hostReturnCode>01</hostReturnCode>
+        <cstNo>$cstNo</cstNo>
+        <cstName>$cstName</cstName>
+        <cstSex>$cstSex</cstSex>
+        <cstAge>$cstAge</cstAge>
+    </body>
+</Document>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="common.getUserAccountList" name="查询用户账户列表" common="true">
+        <bl:dataDictionary>
+            <bl:dataList name="userAccountList" desc="账户集合">
+                <bl:columnField name="accNo" desc="账户"/>
+                <bl:columnField name="accAlias" desc="账户别名"/>
+                <bl:columnField name="accState" desc="账户状态"/>
+                <bl:columnField name="accType" desc="账户类型"/>
+                <bl:columnField name="accAmt" desc="剩余金额"/>
+                <bl:columnField name="accOpenBranch" desc="开户分行"/>
+                <bl:columnField name="accOpenNode" desc="开户网点"/>
+                <bl:columnField name="accCreateTime" desc="创建时间"/>
+                <bl:columnField name="accFreezeTime" desc="冻结时间"/>
+                <bl:columnField name="accCancelTime" desc="销户时间"/>
+                <bl:columnField name="accLimit" desc="账户限额"/>
+            </bl:dataList>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="cstNo"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="userAccountList"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="messageCommAction1" type="messageCommAction">
+                <bl:actionConfig>
+                    <bl:property name="commClientName" value="mockClient"/>
+                    <bl:property name="trxCode" value=""/>
+                    <bl:property name="sysCode" value="yh"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="sqlQueryMultAction0" type="sqlQueryMultAction">
+                <bl:actionConfig>
+                    <bl:property name="actionDesc" value="查询账户信息"/>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="querySql" value="select accNo,accAlias,accState,accType,accOpenBranch,accOpenNode,accCreateTime,accFreezeTime,accCancelTime,accLimit from ifp_account where userId=#cstNo"/>
+                    <bl:property name="listName" value="userAccountList"/>
+                    <bl:property name="outputFields" value="accNo||accAlias||accState||accType||accOpenBranch||accOpenNode||accCreateTime||accFreezeTime||accCancelTime||accLimit"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryMultAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition0" value="sqlQueryMultAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>

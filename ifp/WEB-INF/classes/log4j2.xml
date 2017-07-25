@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+	<!--先定义所有的appender -->
+	<appenders>
+		<!--这个输出控制台的配置 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+			<!--这个都知道是输出日志的格式 -->
+			<!-- <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} %-5level %-5logger{36} - %msg%xEx%n" /> -->
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} %-5level - %msg%xEx%n" />
+		</Console>
+		<!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<RollingFile name="RollingFile" fileName="e:/logs/app.log" filePattern="e:/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.appLog.gz" bufferedIO="true" bufferSize="65536" immediateFlush="false">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} %-5level - %msg%xEx%n" />
+			<SizeBasedTriggeringPolicy size="100MB" />
+		</RollingFile>
+		<File name="ErrorLog" fileName="target/logs/error.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} %-5level - %msg%xEx%n"/>
+        </File>
+        <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+        <RollingFile name="ThreadRollingFile" fileName="e:/logs/thread.log" filePattern="e:/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.threadLog.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} %-5level - %msg%xEx%n" />
+            <SizeBasedTriggeringPolicy size="100MB" />
+        </RollingFile>
+        
+        <Async name="AsyncRollingFile" Blocking="false" BufferSize="500">
+        	<AppenderRef ref="RollingFile" />
+        </Async>
+	</appenders>
+	<!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+	<loggers>
+		<!--建立一个默认的root的logger -->
+		<asyncRoot level="info" includeLocation="false">
+			<appender-ref ref="RollingFile" />
+			<appender-ref ref="Console" />
+			<appender-ref ref="ErrorLog" />
+		</asyncRoot>
+		<AsyncLogger name="ACTION" level="debug" additivity="false">
+			<appender-ref ref="Console" />
+		    <appender-ref ref="AsyncRollingFile"  />
+		</AsyncLogger>
+		<AsyncLogger name="JDBC" level="debug" additivity="false">
+			<appender-ref ref="Console" />
+		    <appender-ref ref="AsyncRollingFile"  />
+		</AsyncLogger>
+		<AsyncLogger name="INTERCEPTOR" level="debug" additivity="false">
+			<appender-ref ref="Console" />
+		    <appender-ref ref="AsyncRollingFile"  />
+		</AsyncLogger>
+		<AsyncLogger name="MVC" level="info" additivity="false">
+			<appender-ref ref="Console" />
+		    <appender-ref ref="AsyncRollingFile"  />
+		</AsyncLogger>
+		<AsyncLogger name="RPC" level="debug" additivity="false">
+			<appender-ref ref="Console" />
+		    <appender-ref ref="AsyncRollingFile"  />
+		</AsyncLogger>
+		<AsyncLogger name="THREAD" level="info" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsyncRollingFile"  />
+        </AsyncLogger>
+        <logger name="FLUME_STAT" level="info" additivity="false">
+        </logger>
+        <logger name="FLUME_NORMAL" level="info" additivity="false">
+        </logger>
+        <logger name="MONITOR" level="info" additivity="true">
+        </logger>
+        <logger name="org.springframework" level="error" additivity="false">
+        	<appender-ref ref="RollingFile"  />
+        </logger>
+        <logger name="org.apache.velocity" level="error" additivity="false">
+        	<appender-ref ref="RollingFile"  />
+        </logger>
+        <logger name="com.alibaba.dubbo" level="info" additivity="false">
+        	<appender-ref ref="RollingFile"  />
+        </logger>
+	</loggers>
+</configuration>

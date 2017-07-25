@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cl="http://www.ynet.com/cl"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.ynet.com/cl http://www.ynet.com/cl.xsd">
+    <bean id="request" class="com.ifp.core.validation.RequestValidation" />
+    <bean id="fieldLength" class="com.ifp.core.validation.FieldLengthValidation" />
+    <bean id="pattern" class="com.ifp.core.validation.PatternValidation" />
+    
+	<!-- <cl:validationForm id="testValidation" tranCode="test" desc="test">
+		<cl:validationField name="cstNo" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstNo"></cl:validationField>
+		<cl:validationField name="cstName" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstName"></cl:validationField>
+		<cl:validationField name="cstSex" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstSex"></cl:validationField>
+		<cl:validationField name="cstAge" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstAge"></cl:validationField>
+	</cl:validationForm>
+	<cl:validationForm id="testSessionActionValidation" tranCode="testSessionAction" desc="test">
+		<cl:validationField name="cstNo" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstNo"></cl:validationField>
+		<cl:validationField name="cstName" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstName"></cl:validationField>
+		<cl:validationField name="cstSex" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstSex"></cl:validationField>
+		<cl:validationField name="cstAge" type="request;pattern{[a-zA-Z0-9]{1,60}}" desc="cstAge"></cl:validationField>
+	</cl:validationForm> -->
+</beans>

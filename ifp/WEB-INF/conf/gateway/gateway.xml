@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    <!-- 通讯连接处理类 -->
+    <bean id="gatewayHandle" class="com.ifp.gateway.handle.GatewayHandle">
+        <property name="channelMap">
+            <map>
+                <entry key="mockClient" value-ref="mockClient"></entry>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="mockClient" class="com.ifp.gateway.bean.Channel">
+    	<property name="interfaceMap">
+            <map>
+                <entry key="pb" value-ref="pbTcpService" />
+                <entry key="mb" value-ref="mbHttpService" />
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="xmlFormatter1" class="com.ifp.gateway.formater.XmlFormater1" />
+    <bean id="xmlFormater1" class="com.ifp.gateway.formater.XmlFormater1" />
+</beans>

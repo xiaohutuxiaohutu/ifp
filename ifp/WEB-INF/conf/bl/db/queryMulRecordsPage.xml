@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bl="http://www.ynet.com/bl" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.ynet.com/bl http://www.ynet.com/bl.xsd">
+    <bl:businessLogic id="db.queryMulRecordsPage" common="false">
+        <bl:dataDictionary>
+            <bl:dataField name="pageNo" desc="当前页码"/>
+            <bl:dataField name="pageSize" desc="每页记录数"/>
+            <bl:dataField name="totalSize" desc="总记录数"/>
+            <bl:dataField name="totalPages" desc="总页数"/>
+            <bl:dataList name="cstList">
+                <bl:columnField name="cstNo" desc="客户编号"/>
+                <bl:columnField name="cstName" desc="客户姓名"/>
+                <bl:columnField name="cstSex" desc="客户性别(M:男,F:女)"/>
+                <bl:columnField name="cstAge" desc="年龄"/>
+            </bl:dataList>
+            <bl:dataField name="cstNo" desc="客户编号"/>
+        </bl:dataDictionary>
+        <bl:input>
+            <bl:inField name="pageNo"/>
+            <bl:inField name="pageSize"/>
+        </bl:input>
+        <bl:output>
+            <bl:outField name="cstList"/>
+            <bl:outField name="pageNo"/>
+            <bl:outField name="pageSize"/>
+            <bl:outField name="totalSize"/>
+        </bl:output>
+        <bl:flow>
+            <bl:action id="endAction0" type="endAction">
+                <bl:actionConfig>
+                    <bl:property name="value" value="0"/>
+                </bl:actionConfig>
+            </bl:action>
+            <bl:action id="setFieldValueAction0" type="setFieldValueAction">
+                <bl:actionConfig>
+                    <bl:property name="fieldName" value="cstNo"/>
+                    <bl:property name="fieldValue" value="1001"/>
+                </bl:actionConfig>
+                <bl:target id="setFieldValueAction0.transition1" value="sqlQueryMultPageAction0"/>
+            </bl:action>
+            <bl:action id="sqlQueryMultPageAction0" type="sqlQueryMultPageAction">
+                <bl:actionConfig>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="queryFields" value="IFP_USERID, IFP_USERNAME, IFP_MOBILE, IFP_CERTTYPE"/>
+                    <bl:property name="queryTables" value="IFP_USER"/>
+                    <bl:property name="queryCondition" value=""/>
+                    <bl:property name="queryOrder" value=""/>
+                    <bl:property name="pageNo" value="pageNo"/>
+                    <bl:property name="pageSize" value="pageSize"/>
+                    <bl:property name="totalSize" value="totalSize"/>
+                    <bl:property name="listName" value="cstList"/>
+                    <bl:property name="outputFields" value="cstNo||cstName||cstSex||cstAge"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryMultPageAction0.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="sqlQueryMultPageAction1" type="sqlQueryMultPageAction">
+                <bl:actionConfig>
+                    <bl:property name="dataSource" value="mainDB"/>
+                    <bl:property name="queryFields" value="order_id,to_char(cr_date,'yyyy-mm-dd') cdate,nvl(order_id,0) orid"/>
+                    <bl:property name="queryTables" value="t_order"/>
+                    <bl:property name="queryCondition" value="user_id=#cstNo"/>
+                    <bl:property name="queryOrder" value=""/>
+                    <bl:property name="pageNo" value="pageNo"/>
+                    <bl:property name="pageSize" value="pageSize"/>
+                    <bl:property name="totalSize" value="totalSize"/>
+                    <bl:property name="listName" value="cstList"/>
+                    <bl:property name="outputFields" value="cstNo||cstName||cstSex"/>
+                </bl:actionConfig>
+                <bl:target id="sqlQueryMultPageAction1.transition0" value="endAction0"/>
+            </bl:action>
+            <bl:action id="startAction0" type="startAction">
+                <bl:target id="startAction0.transition3" value="setFieldValueAction0"/>
+            </bl:action>
+        </bl:flow>
+    </bl:businessLogic>
+</beans>
